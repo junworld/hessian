@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <!-- 接口实现 -->
+    <bean id="hessianInterface" class="com.hessian.server.HessianInterfaceImpl"/>
+    <bean id="basicAPI" class="com.hessian.server.BasicService"/>
+
+    <!-- 远程服务 -->
+    <bean name="/hessianInterface" class="org.springframework.remoting.caucho.HessianServiceExporter">
+        <property name="service" ref="hessianInterface"/>
+        <property name="serviceInterface">
+            <value>com.hessian.api.HessianInterface</value>
+        </property>
+    </bean>
+
+    <!-- 远程服务 -->
+    <bean name="/basicAPI" class="org.springframework.remoting.caucho.HessianServiceExporter">
+        <property name="service" ref="basicAPI"/>
+        <property name="serviceInterface">
+            <value>com.hessian.api.BasicAPI</value>
+        </property>
+    </bean>
+
+</beans>
